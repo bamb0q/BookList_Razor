@@ -13,6 +13,9 @@ namespace BookList_Razor.Pages.BookList
     {
         private ApplicationDbContext _db;
 
+        [TempData]
+        public string Message { get; set; }
+
         public IndexModel(ApplicationDbContext db)
         {
             _db = db;
@@ -24,6 +27,17 @@ namespace BookList_Razor.Pages.BookList
         public async Task OnGet()
         {
             Books = await _db.Books.ToListAsync();
+        }
+
+        public async Task<IActionResult> OnPostDelete(int id)
+        {
+            var book = _db.Books.Find(id);
+            _db.Books.Remove(book);
+            await _db.SaveChangesAsync();
+
+            Message = "Book Deleted Successfully";
+
+            return RedirectToPage();
         }
     }
 }
