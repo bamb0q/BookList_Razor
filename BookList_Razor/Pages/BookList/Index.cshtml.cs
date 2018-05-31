@@ -21,7 +21,6 @@ namespace BookList_Razor.Pages.BookList
             _db = db;
         }
 
-
         public IEnumerable<Book> Books { get; set; }
 
         public async Task OnGet()
